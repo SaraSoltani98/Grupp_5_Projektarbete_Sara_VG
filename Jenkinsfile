@@ -4,16 +4,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'chmod +x mvnw'
-                sh './mvnw clean package'
+                bat 'mvnw.cmd clean package'
             }
         }
     }
 
     post {
         always {
-            junit 'target/surefire-reports/*.xml'
-            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true, allowEmptyArchive: true
+            junit testResults: 'target/surefire-reports/*.xml', allowEmptyResults: true
         }
     }
 }
