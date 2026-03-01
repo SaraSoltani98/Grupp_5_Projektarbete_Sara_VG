@@ -1,33 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Visa all frånvaro</title>
 </head>
 <body>
+
 <h1>All frånvaro</h1>
 
-<p><a th:href="@{/}">Tillbaka till startsidan</a></p>
-<a th:href="@{/leaves/new}">Skapa ny frånvaro</a>
+<p>
+    <a th:href="@{/}">Tillbaka till startsidan</a>
+</p>
+
+<p>
+    <a th:href="@{/leaves/new}">Skapa ny frånvaro</a>
+</p>
+
+<hr>
 
 <ul>
     <li th:each="leave : ${leaves}">
-        <!-- härinne loopas listan -->
 
-        <span th:text="${leave.employeeName}"></span>
+        <strong>
+            <span th:text="'ID: ' + ${leave.id}"></span>
+        </strong>
+
+        <br>
+
+        <span th:text="'Namn: ' + ${leave.employeeName}"></span>
+        <br>
+
+        <span th:text="'Start: ' + ${leave.startDate}"></span>
+        <br>
+
+        <span th:text="'Slut: ' + ${leave.endDate}"></span>
+        <br>
+
+        <span th:text="'Godkänd: ' + ${leave.approved}"></span>
+
+        <br><br>
+
         <a th:href="@{/leaves/{id}(id=${leave.id})}">Visa info</a>
-        <span> - </span>
+        <span> | </span>
 
-        <a th:href="@{/leaves/{id}/edit(id=${leave.id})}">Uppdatera frånvaro</a>
+        <a th:href="@{/leaves/{id}/edit(id=${leave.id})}">
+            Uppdatera frånvaro
+        </a>
 
+        <span> | </span>
 
-        <form th:action="@{/leaves/{id}(id=${leave.id})}" method="post" style="display:inline;">
+        <form th:action="@{/leaves/{id}(id=${leave.id})}"
+              method="post"
+              style="display:inline;">
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit">Ta bort</button>
         </form>
 
-    </li>
+        <hr>
 
+    </li>
 </ul>
 
 </body>
+</html>
